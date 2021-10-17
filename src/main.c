@@ -10,7 +10,7 @@
 
 void display_help(void) {
     printf(
-        "tfb - Tiny Brainfuck interpreter, compiler, and REPL [version %s]\n"
+        "tbf - Tiny Brainfuck interpreter, compiler, and REPL [version %s]\n"
         "Suirabu <suirabu.dev@gmail.com>\n"
         "\n"
         "Usage:\n"
