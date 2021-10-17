@@ -139,6 +139,11 @@ int main(int argc, char* argv[]) {
 
     // Run REPL
     if(!options.compile && !options.run) {
+        if(options.program != NULL) {
+            fprintf(stderr, "ERROR: Unnecessary positional argument '%s'. Did you mean to run this command with the '--compile' or '--run' options?\n", options.program);
+            return 1;
+        }
+
         printf(
             "tfb - Tiny Brainfuck interpreter, compiler, and REPL [version %s]\n"
             "Suirabu <suirabu.dev@gmail.com>\n"
