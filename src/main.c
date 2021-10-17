@@ -3,11 +3,13 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "interpreter.h"
+
 #define VERSION_NUMBER "0.0.1"
 
 void display_help(void) {
     printf(
-        "tfb - Tiny Brainfuck interpreter and compiler [version %s]\n"
+        "tfb - Tiny Brainfuck interpreter, compiler, and REPL [version %s]\n"
         "Suirabu <suirabu.dev@gmail.com>\n"
         "\n"
         "Usage:\n"
@@ -133,6 +135,61 @@ int main(int argc, char* argv[]) {
         display_help();
         return 0; 
     }
+
+    // Run REPL
+    if(!options.compile && !options.run) {
+        // TODO: Implement REPL
+        fprintf(stderr, "ERROR: REPL has not yet been implemented\n");
+        return 1;
+    }
+    
+    if(options.program == NULL) {
+        fprintf(stderr, "ERROR: 'program' positional not provided\n");
+        return 1;
+    }
+
+    // Attempt to open program file and read it's contents into buffer
+    FILE* program = fopen(options.program, "r");
+    if(program == NULL) {
+        fprintf(stderr, "ERROR: Failed to open file '%s' for reading\n", options.program);
+        return 1;
+    }
+
+    fseek(program, 0, SEEK_END);
+    size_t program_length = ftell(program);
+    rewind(program);
+
+    char* program_buffer = malloc(program_length + 1);
+    if(program_buffer == NULL) {
+        fprintf(stderr, "ERROR: Failed to allocate memory for program buffer\n");
+        fclose(program);
+        return 1;
+    }
+
+    if(fread(program_buffer, 1, program_length, program) != program_length) {
+        fprintf(stderr, "ERROR: Failed to read file contents into program buffer\n");
+        fclose(program);
+        free(program_buffer);
+        return 1;
+    }
+    fclose(program);
+    program_buffer[program_length] = '\0';
+
+    // Compile program
+    if(options.compile) {
+        // TODO: Implement compiler
+        fprintf(stderr, "ERROR: Compiler has not yet been implemented\n");
+        return 1;
+    }
+    // Interpret program
+    else if(options.run) {
+        if(!run_program(program_buffer, program_length)) {
+            free(program_buffer);
+            return 1;
+        }
+    }
+
+    free(program_buffer);
 
     return 0;
 }
