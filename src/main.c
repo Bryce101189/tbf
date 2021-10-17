@@ -183,10 +183,11 @@ int main(int argc, char* argv[]) {
     }
     // Interpret program
     else if(options.run) {
-        if(!run_program(program_buffer, program_length)) {
+        if(!init_interpreter() || !run_program(program_buffer, program_length)) {
             free(program_buffer);
             return 1;
         }
+        destroy_interpreter();
     }
 
     free(program_buffer);
