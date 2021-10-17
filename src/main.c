@@ -6,7 +6,7 @@
 #include "interpreter.h"
 #include "compiler.h"
 
-#define VERSION_NUMBER "0.0.1"
+#define VERSION_NUMBER "0.1.0"
 
 void display_help(void) {
     printf(
