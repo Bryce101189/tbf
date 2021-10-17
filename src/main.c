@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "interpreter.h"
+#include "compiler.h"
 
 #define VERSION_NUMBER "0.0.1"
 
@@ -198,9 +199,34 @@ int main(int argc, char* argv[]) {
 
     // Compile program
     if(options.compile) {
-        // TODO: Implement compiler
-        fprintf(stderr, "ERROR: Compiler has not yet been implemented\n");
-        return 1;
+        if(options.output == NULL) {
+            options.output = options.program;
+
+            // Strip file extension from output
+            int len = strlen(options.output);
+            int last_slash = -1;
+            
+            for(int i = 0; i < len; ++i) {
+                if(options.output[i] == '/' || options.output[i] == '\\') {
+                    last_slash = i;
+                }
+            }
+            
+            int i = len;
+            while(i > 0) {
+                if(options.output[i] == '.') {
+                    options.output[i] = '\0';
+                    break;
+                }
+                --i;
+            }
+
+            if(last_slash != -1) {
+                options.output = options.output + last_slash + 1;
+            }
+        }
+
+        compile_program(program_buffer, program_length, options.output);
     }
     // Interpret program
     else if(options.run) {
