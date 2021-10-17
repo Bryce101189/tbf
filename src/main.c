@@ -138,9 +138,30 @@ int main(int argc, char* argv[]) {
 
     // Run REPL
     if(!options.compile && !options.run) {
-        // TODO: Implement REPL
-        fprintf(stderr, "ERROR: REPL has not yet been implemented\n");
-        return 1;
+        printf(
+            "tfb - Tiny Brainfuck interpreter, compiler, and REPL [version %s]\n"
+            "Suirabu <suirabu.dev@gmail.com>\n"
+            "Type `exit` to exit the REPL\n",
+            VERSION_NUMBER
+        );
+
+        init_interpreter();
+        char buffer[256];
+
+        while(true) {
+            printf("> ");
+            if(fgets(buffer, 256, stdin) == NULL) {
+                destroy_interpreter();
+                return 1;
+            }
+
+            if(strcmp(buffer, "exit\n") == 0) {
+                destroy_interpreter();
+                return 0;
+            }
+
+            run_program(buffer, strlen(buffer));
+        }
     }
     
     if(options.program == NULL) {
