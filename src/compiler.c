@@ -172,7 +172,7 @@ bool compile_program(char* program, unsigned int length, char* output_path) {
 #ifdef _WIN32
     sprintf(command, "cc %s -Ofast -o %s.exe", new_output_path, output_path);
 #else
-    sprintf(command, "cc %s -Ofast -o %s.out", new_output_path, output_path);
+    sprintf(command, "cc %s -Ofast -o %s", new_output_path, output_path);
 #endif // _WIN32
     
     fprintf(stderr, "%s\n", command);
