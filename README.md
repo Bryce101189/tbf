@@ -37,7 +37,7 @@ tbf --run /path/to/program.bf
 Compiling and running a Brainfuck program
 
 ```bash
-tbf --compile /path/to/program/bf --output program
+tbf --compile /path/to/program.bf --output program
 
 # On Windows systems '.\program.exe' should be run instead
 ./program
